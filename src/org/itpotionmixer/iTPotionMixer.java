@@ -25,7 +25,7 @@ public class iTPotionMixer extends ActiveScript implements MessageListener, Pain
 
     @Override
     protected void setup() {
-        Variables.img = Functions.getImage("http://phl0w.com/crap/mixer.png");
+        Variables.img = Functions.getImage("http://i45.tinypic.com/rmsgh3.png");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
