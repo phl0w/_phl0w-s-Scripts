@@ -16,7 +16,7 @@ public class ItemOnItem extends Strategy implements Task {
 
     @Override
     public boolean validate() {
-        return Variables.guiInitialized && !Widgets.get(905, 14).validate() && !Functions.waitFor(1000, new Condition() {
+        return Variables.guiInitialized && !Widgets.get(905, 14).validate() && !Functions.waitFor(1200, new Condition() {
             @Override
             public boolean validate() {
                 return Players.getLocal().getAnimation() != -1;
@@ -29,14 +29,27 @@ public class ItemOnItem extends Strategy implements Task {
         Variables.status = "ioi";
         Item prim = Inventory.getItem(Variables.primary);
         Item sec = Inventory.getItem(Variables.secondary);
-        Mouse.hop((int) prim.getWidgetChild().getCentralPoint().getX() + Random.nextInt(0, 7), (int) prim.getWidgetChild()
-                .getCentralPoint().getY()
-                + Random.nextInt(0, 7));
-        Mouse.click(true);
-        Mouse.hop((int) sec.getWidgetChild().getCentralPoint().getX() + Random.nextInt(0, 7), (int) sec.getWidgetChild()
-                .getCentralPoint().getY()
-                + Random.nextInt(0, 7));
-        Mouse.click(true);
+        if (!Variables.startupCheck) {
+            Variables.info[0] = prim.getWidgetChild().getActions()[0].equals("Use");
+            Variables.info[1] = sec.getWidgetChild().getActions()[0].equals("Use");
+            Variables.startupCheck = true;
+        }
+        if (Variables.info[0]) {
+            Mouse.hop((int) prim.getWidgetChild().getCentralPoint().getX() + Random.nextInt(0, 7), (int) prim.getWidgetChild()
+                    .getCentralPoint().getY()
+                    + Random.nextInt(0, 7));
+            Mouse.click(true);
+        } else {
+            prim.getWidgetChild().interact("Use");
+        }
+        if (Variables.info[1]) {
+            Mouse.hop((int) sec.getWidgetChild().getCentralPoint().getX() + Random.nextInt(0, 7), (int) sec.getWidgetChild()
+                    .getCentralPoint().getY()
+                    + Random.nextInt(0, 7));
+            Mouse.click(true);
+        } else {
+            sec.getWidgetChild().interact("Use");
+        }
         Functions.waitFor(3000, new Condition() {
             @Override
             public boolean validate() {

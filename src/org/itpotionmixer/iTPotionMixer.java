@@ -25,10 +25,6 @@ public class iTPotionMixer extends ActiveScript implements MessageListener, Pain
 
     @Override
     protected void setup() {
-        if (Functions.downloadFont()) {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Variables.font);
-        }
         Variables.img = Functions.getImage("http://phl0w.com/crap/mixer.png");
         SwingUtilities.invokeLater(new Runnable() {
             @Override

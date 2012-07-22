@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class Paint {
 
-    public static Font font;
+    public static Font font = new Font("Arial", Font.PLAIN, 20);
 
     public static void onRepaint(Graphics g) {
         final Graphics2D g2d = (Graphics2D) g;
@@ -17,10 +17,6 @@ public class Paint {
                 RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 
         g2d.drawImage(Variables.img, 0, 0, null);
-
-        if (font == null && Variables.font != null) {
-            font = Variables.font.deriveFont(Font.PLAIN, 20);
-        }
 
         g2d.setFont(font);
         g2d.setColor(Color.WHITE);

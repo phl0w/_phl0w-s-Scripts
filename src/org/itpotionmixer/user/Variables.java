@@ -13,6 +13,8 @@ public class Variables {
     public static boolean abSupport = true;
     public static boolean paintSupport = true;
     public static boolean guiInitialized;
+    public static boolean startupCheck;
+    public static boolean info[] = new boolean[2];
 
     public static String status = "n/a";
 

@@ -6,7 +6,6 @@ import org.powerbot.game.api.util.Timer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.*;
 import java.net.URL;
 
 public class Functions {
@@ -25,7 +24,7 @@ public class Functions {
             {107, 239, "Super Defence"}, {2483, 241, "Antifire"}, {109, 245, "Ranging Potion"}, {2483, 3138, "Magic Potion"},
             {111, 247, "Zamorak Brew"}, {3002, 6693, "Saradomin Brew"}, {21628, 21622, "Prayer Renewal"}, {95, 592, "Serum 207"},
             {145, 261, "Extreme Attack"}, {157, 267, "Extreme Strength"}, {163, 2481, "Extreme Defence"},
-            {169, 12539, "Extreme Ranging"}, {3042, 9594, "Extreme Magic"}, {15309, 15313, "Overload"}};
+            {169, 12539, "Extreme Ranging"}, {3042, 9594, "Extreme Magic"}, {15309, 15313, "Overload"}, {3018, 5972, "Recover Special"}};
 
     public static int[] getIngredients(String potion) {
         for (int i = 0; i < POTION_DATA.length; i++) {
@@ -52,25 +51,4 @@ public class Functions {
         }
         return img;
     }
-
-    public static boolean downloadFont() {
-        try {
-            File font = new File("fontfile.ttf");
-            InputStream in = new BufferedInputStream(new URL("http://phl0w.com/crap/bebas.png").openStream());
-            OutputStream out = new FileOutputStream(font);
-            byte buf[] = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0) {
-                out.write(buf, 0, len);
-            }
-            out.close();
-            in.close();
-            Variables.font = Font.createFont(Font.TRUETYPE_FONT, font);
-            return Variables.font != null;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
 }
