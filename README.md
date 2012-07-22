@@ -1,4 +1,6 @@
 _phl0w-s-Scripts
 ================
 
-All my scripts.
+Current scripts available:
+iTPlanker
+iTPotionMixer
