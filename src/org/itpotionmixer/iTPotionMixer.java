@@ -4,9 +4,11 @@ import org.itpotionmixer.strategies.Antiban;
 import org.itpotionmixer.strategies.Banking;
 import org.itpotionmixer.strategies.ItemOnItem;
 import org.itpotionmixer.strategies.Mix;
+import org.itpotionmixer.user.Functions;
 import org.itpotionmixer.user.Paint;
 import org.itpotionmixer.user.Variables;
 import org.itpotionmixer.user.iTPotionMixerGUI;
+import org.powerbot.concurrent.strategy.Strategy;
 import org.powerbot.game.api.ActiveScript;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.tab.Skills;
@@ -23,6 +25,11 @@ public class iTPotionMixer extends ActiveScript implements MessageListener, Pain
 
     @Override
     protected void setup() {
+        if (Functions.downloadFont()) {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Variables.font);
+        }
+        Variables.img = Functions.getImage("http://phl0w.com/crap/mixer.png");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -30,10 +37,13 @@ public class iTPotionMixer extends ActiveScript implements MessageListener, Pain
                 ui.setVisible(true);
             }
         });
-        provide(new Antiban());
         provide(new Mix());
         provide(new ItemOnItem());
         provide(new Banking());
+        Strategy ab = new Antiban();
+        ab.setLock(false);
+        ab.setSync(true);
+        provide(ab);
         Variables.startTime = System.currentTimeMillis();
         Variables.startXp = Skills.getExperience(Skills.HERBLORE);
         Variables.startLevel = Skills.getLevel(Skills.HERBLORE);

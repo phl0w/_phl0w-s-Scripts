@@ -24,7 +24,7 @@ public class Antiban extends Strategy implements Task {
         Time.sleep(1000);
     }
 
-    private final void executeAntiBan() {
+    private void executeAntiBan() {
         Camera.setAngle(Random.nextInt(20, 300));
     }
 }

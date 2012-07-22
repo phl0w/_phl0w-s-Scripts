@@ -4,6 +4,11 @@ import org.powerbot.concurrent.strategy.Condition;
 import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.util.Timer;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.*;
+import java.net.URL;
+
 public class Functions {
 
     private static final Object[][] POTION_DATA = {{227, 249, "Unfinished Guam"}, {227, 251, "Unfinished Marrentill"},
@@ -38,4 +43,34 @@ public class Functions {
         }
         return condition.validate();
     }
+
+    public static Image getImage(String url) {
+        Image img = null;
+        try {
+            img = ImageIO.read(new URL(url));
+        } catch (Exception ignored) {
+        }
+        return img;
+    }
+
+    public static boolean downloadFont() {
+        try {
+            File font = new File("fontfile.ttf");
+            InputStream in = new BufferedInputStream(new URL("http://phl0w.com/crap/bebas.png").openStream());
+            OutputStream out = new FileOutputStream(font);
+            byte buf[] = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+            Variables.font = Font.createFont(Font.TRUETYPE_FONT, font);
+            return Variables.font != null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }

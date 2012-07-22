@@ -1,5 +1,7 @@
 package org.itpotionmixer.user;
 
+import java.awt.*;
+
 public class Variables {
 
     public static int primary;
@@ -15,5 +17,8 @@ public class Variables {
     public static String status = "n/a";
 
     public static long startTime;
+
+    public static Image img = null;
+    public static Font font = null;
 
 }
