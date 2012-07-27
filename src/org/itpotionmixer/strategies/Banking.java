@@ -27,10 +27,11 @@ public class Banking extends Strategy implements Task {
                     Bank.withdraw(15321, 4);
                     Bank.withdraw(15325, 4);
                     Bank.withdraw(269, 4);
-                }
-                Bank.withdraw(Variables.primary, Variables.primary == 169 ? 0 : 14);
-                if (Variables.secondary != 12539) {
-                    Bank.withdraw(Variables.secondary, 14);
+                } else {
+                    Bank.withdraw(Variables.primary, Variables.primary == 169 ? 0 : 14);
+                    if (Variables.secondary != 12539) {
+                        Bank.withdraw(Variables.secondary, 14);
+                    }
                 }
                 Bank.close();
             }

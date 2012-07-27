@@ -19,7 +19,7 @@ import org.powerbot.game.bot.event.listener.PaintListener;
 import javax.swing.*;
 import java.awt.*;
 
-@Manifest(authors = {"_phl0w"}, name = "iTPotionMixer", description = "Mix potions! Follow instructions on GUI.", version = 1.6, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
+@Manifest(authors = {"_phl0w"}, name = "iTPotionMixer", description = "Mix potions! Follow instructions on GUI.", version = 1.7, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
 public class iTPotionMixer extends ActiveScript implements MessageListener, PaintListener {
 
 
