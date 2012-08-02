@@ -1,12 +1,24 @@
 package org.phl0w.chatlogs;
 
 import org.phl0w.chatlogs.logs.LogEntry;
+import org.phl0w.chatlogs.logs.LogEntryComparator;
 
 import java.io.*;
 import java.util.*;
 
+
+/**
+ * Provides a bunch of functions to be used with the file merging.
+ *
+ * @author _phl0w
+ */
 public class Functions {
 
+    /**
+     * @param path An absolute path linking to the file to read.
+     * @return A string that contains all the logs.
+     * @throws IOException
+     */
     public static String readFile(String path) throws IOException {
         FileInputStream fis = new FileInputStream(path);
         DataInputStream in = new DataInputStream(fis);
@@ -24,6 +36,12 @@ public class Functions {
         return sb.toString();
     }
 
+
+    /**
+     * @param f The file to scan through.
+     * @return A string that contains all the logs ordered by date.
+     * @throws IOException
+     */
     public static String updateLines(File f) throws IOException {
         List<LogEntry> entries = new LinkedList<LogEntry>();
         FileInputStream fis = new FileInputStream(f.getAbsolutePath());
@@ -49,7 +67,8 @@ public class Functions {
                 Variables.log.info("Fixing line #'s");
             }
         }
-        Collections.sort(entries);
+        LogEntryComparator lec = new LogEntryComparator();
+        Collections.sort(entries, lec);
         ArrayList<Date> used = new ArrayList<Date>();
         for (final LogEntry entry : entries) {
             if (!used.contains(entry.time)) {

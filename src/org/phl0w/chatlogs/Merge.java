@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
+/**
+ * Finds the log file directory based on OS and merges the logs together by #channels and private messages.
+ *
+ * @author _phl0w
+ */
 public class Merge {
 
     public static void main(String... args) {
@@ -76,6 +81,6 @@ public class Merge {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("That took " + (System.currentTimeMillis() - startTime) + " ms.");
+        Variables.log.info("That took " + (System.currentTimeMillis() - startTime) + " ms.");
     }
 }

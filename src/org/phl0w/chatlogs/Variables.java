@@ -6,6 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+/**
+ * Provides variables which are used in Merge
+ *
+ * @author _phl0w
+ * @see Merge
+ */
 public class Variables {
 
     public static final Logger log = Logger.getLogger(Merge.class.getName());

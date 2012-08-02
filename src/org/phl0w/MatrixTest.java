@@ -1,5 +1,10 @@
 package org.phl0w;
 
+/**
+ * Multiplies two specified matrices.
+ *
+ * @author _phl0w
+ */
 public class MatrixTest {
 
     private static final double[][] MATRIX_1_ARRAY = {
@@ -19,17 +24,33 @@ public class MatrixTest {
         m1.multiplyWith(m2).show();
     }
 
+    /**
+     * Allows creation of LogEntry objects.
+     *
+     * @author _phl0w
+     */
     public static class Matrix {
         private final int rows;
         private final int columns;
         private final double[][] array;
 
+        /**
+         * Creates a new Matrix object using the specified rows and columns.
+         *
+         * @param rows    the amount of rows for the Matrix object.
+         * @param columns the amount of columns for the Matrix object.
+         */
         public Matrix(int rows, int columns) {
             this.rows = rows;
             this.columns = columns;
             array = new double[rows][columns];
         }
 
+        /**
+         * Creates a new Matrix object using the specified data.
+         *
+         * @param data
+         */
         public Matrix(double[][] data) {
             rows = data.length;
             columns = data[0].length;
@@ -38,6 +59,12 @@ public class MatrixTest {
                 System.arraycopy(data[i], 0, this.array[i], 0, columns);
         }
 
+        /**
+         * Calculates the Matrix of two multiplied matrices.
+         *
+         * @param b the Matrix to multiply with.
+         * @return the multiplied Matrix.
+         */
         public Matrix multiplyWith(Matrix b) {
             Matrix a = this;
             if (a.columns != b.rows) {
@@ -54,6 +81,9 @@ public class MatrixTest {
             return c;
         }
 
+        /**
+         * 'Shows' the matrix.
+         */
         public void show() {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
