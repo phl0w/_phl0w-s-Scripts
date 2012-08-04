@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
@@ -18,7 +19,7 @@ public class Variables {
     public static final File ROOT_FOLDER = new File(System.getProperty("user.home") + (System.getProperty("os.name").contains("Windows") ? "/AppData/Roaming/X-Chat 2/xchatlogs" : "/.xchat2/xchatlogs"));
     public static final HashMap<String, File[]> files = new HashMap<String, File[]>();
     public static final HashMap<File, File[]> filesToWrite = new HashMap<File, File[]>();
-    public static final DateFormat FORMAT = new SimpleDateFormat("yyyy MMM dd hh:mm:sss");
     public static final String SEPARATOR = System.getProperty("line.separator");
+    public static final DateFormat formatter = new SimpleDateFormat("yyyy MMM dd hh:mm:sss", Locale.UK);
 
 }

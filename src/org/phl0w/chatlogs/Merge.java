@@ -41,6 +41,7 @@ public class Merge {
             }
         } else {
             Variables.log.info("No log folder detected.");
+            System.exit(-1);
         }
         String channel;
         File f;
