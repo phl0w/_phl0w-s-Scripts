@@ -2,8 +2,8 @@ package org.beta.itchopper.functions;
 
 public enum State {
 
-    INACTIVE(),
-    CHOPPING(),
-    DROPPING(),
-    WALKING()
+    INACTIVE,
+    BUSY,
+    FULL,
+    WALKING
 }

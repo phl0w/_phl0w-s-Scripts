@@ -8,9 +8,8 @@ import org.powerbot.game.api.wrappers.node.SceneObject;
 
 public class Tree {
 
-    private SceneObject tree;
     private int[] id;
-    private int log;
+    public int log;
 
     public Tree(int log, int... id) {
         this.id = id;
