@@ -12,7 +12,6 @@ import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
-import org.powerbot.game.api.methods.widget.Camera;
 import org.powerbot.game.api.util.Random;
 import org.powerbot.game.api.wrappers.Entity;
 import org.powerbot.game.api.wrappers.Locatable;
@@ -59,10 +58,8 @@ public class Chopper extends BetaScript {
                         }
                         break;
                     case BANKING:
-                        System.out.println("Banking");
                         Entity bank = Bank.getNearest();
                         if (bank != null) {
-                            System.out.println("nearest not null");
                             if (bank.isOnScreen()) {
                                 if (Bank.open()) {
                                     if (Bank.isOpen()) {
@@ -73,13 +70,11 @@ public class Chopper extends BetaScript {
                                     }
                                 }
                             } else {
-                                Camera.turnTo((Locatable) bank);
+                                Turn.turnTo = (Locatable) bank;
                                 if (!bank.isOnScreen()) {
                                     Walking.walk((Locatable) bank);
                                 }
                             }
-                        } else {
-                            System.out.println("Nearest is null");
                         }
                         break;
                 }
@@ -88,7 +83,7 @@ public class Chopper extends BetaScript {
                 SceneObject tree = NORMAL.get();
                 if (tree != null) {
                     if (!tree.isOnScreen()) {
-                        Camera.turnTo(tree);
+                        Turn.turnTo = tree;
                         if (!tree.isOnScreen()) {
                             Walking.walk(tree);
                         }
@@ -105,7 +100,6 @@ public class Chopper extends BetaScript {
                 }
                 break;
         }
-        System.out.println("loop, curstate=" + state.toString());
         return Random.nextInt(800, 1000);
     }
 

@@ -1,6 +1,7 @@
 package org.beta.itchopper;
 
 import org.beta.itchopper.strategies.Chopper;
+import org.beta.itchopper.strategies.Turn;
 import org.powerbot.beta.core.script.Script;
 import org.powerbot.concurrent.LoopTask;
 import org.powerbot.game.api.ActiveScript;
@@ -14,6 +15,10 @@ public class iTChopper extends ActiveScript {
     @Override
     protected void setup() {
         final Script beta_script = new Chopper();
+        final Turn t = new Turn();
+        t.setLock(false);
+        t.setSync(true);
+        provide(t);
 
         submit(new org.powerbot.concurrent.Task() {
             @Override
