@@ -5,5 +5,6 @@ public enum State {
     INACTIVE,
     BUSY,
     FULL,
-    WALKING
+    WALKING,
+    PICKUP
 }

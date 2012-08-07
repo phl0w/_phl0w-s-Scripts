@@ -2,15 +2,23 @@ package org.beta.itchopper;
 
 import org.beta.itchopper.strategies.Chopper;
 import org.beta.itchopper.strategies.Turn;
+import org.beta.itchopper.user.Paint;
+import org.beta.itchopper.user.Variables;
 import org.powerbot.beta.core.script.Script;
 import org.powerbot.concurrent.LoopTask;
 import org.powerbot.game.api.ActiveScript;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.util.Timer;
+import org.powerbot.game.bot.event.MessageEvent;
+import org.powerbot.game.bot.event.listener.MessageListener;
+import org.powerbot.game.bot.event.listener.PaintListener;
+
+import java.awt.*;
+
 
 @Manifest(authors = {"phl0w"}, name = "iTChopper", description = "Testing the new framework :)", version = 1.0d)
-public class iTChopper extends ActiveScript {
+public class iTChopper extends ActiveScript implements PaintListener, MessageListener {
 
     @Override
     protected void setup() {
@@ -67,5 +75,18 @@ public class iTChopper extends ActiveScript {
         });
 
         setIterationDelay(2000);
+    }
+
+    @Override
+    public void onRepaint(Graphics g) {
+        Paint.repaint((Graphics2D) g);
+    }
+
+    @Override
+    public void messageReceived(MessageEvent e) {
+        String msg = e.getMessage();
+        if (msg.contains("You get some")) {
+            Variables.chopped++;
+        }
     }
 }
