@@ -18,7 +18,7 @@ public class Tree {
     }
 
     public SceneObject get() {
-        return tree == null ? (tree = SceneEntities.getNearest(id)) : tree;
+        return SceneEntities.getNearest(id);
     }
 
     public Item[] getItems() {

@@ -14,12 +14,14 @@ import org.powerbot.game.api.wrappers.node.SceneObject;
 public class Chopper extends BetaScript {
 
     private final Tree NORMAL = new Tree(1511, 38782, 38783, 38784, 38785, 38786, 38787, 38788);
+    private SceneObject tree = null;
 
     @Override
     public int loop() {
         State state = getState();
         switch (state) {
             case WALKING:
+                return Random.nextInt(400, 500);
             case CHOPPING:
                 return Random.nextInt(400, 500);
             case DROPPING:
@@ -28,7 +30,7 @@ public class Chopper extends BetaScript {
                 }
                 break;
             case INACTIVE:
-                SceneObject tree = NORMAL.get();
+                tree = NORMAL.get();
                 if (tree != null) {
                     if (tree.interact("Chop down")) {
                         Functions.waitFor(3000, new Condition() {
@@ -39,7 +41,9 @@ public class Chopper extends BetaScript {
                         });
                     }
                 }
+                break;
         }
+        System.out.println("loop, curstate=" + state.toString());
         return Random.nextInt(800, 1000);
     }
 
