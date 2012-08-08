@@ -57,6 +57,7 @@ public class Paint {
         g2d.drawString("Stolen: " + stolen + ".", 20, 130);
         g2d.drawString("Stolen/h: " + stolenHour + ".", 20, 145);
         g2d.drawString("Time running: " + Functions.format((System.currentTimeMillis() - Variables.startTime)) + ".", 20, 160);
+        g2d.drawString("Time TNL: " + Functions.getTimeTillLevel(Skills.THIEVING, xpGained, xpHour) + " (" + Functions.getPercentToNextLevel(Skills.THIEVING) + "% to lvl " + (Skills.getLevel(Skills.THIEVING) + 1) + ").", 20, 175);
     }
 
 }
