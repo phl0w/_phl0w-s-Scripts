@@ -8,8 +8,7 @@ public class Antiban extends Strategy {
 
     @Override
     public void run() {
-        Camera.setPitch(Functions.randomBetween(0, 2) == 1);
-        Camera.setCameraAltitude(Functions.randomBetween(80, 100));
+        Camera.setPitch(true);
         Camera.setCameraRotation(Functions.randomBetween(0, 100));
     }
 
