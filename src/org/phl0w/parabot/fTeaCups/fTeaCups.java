@@ -1,60 +1,44 @@
 package org.phl0w.parabot.fTeaCups;
 
-import com.parabot.methods.GameObjects;
-import com.parabot.methods.Inventory;
-import com.parabot.methods.Players;
-import com.parabot.methods.Walking;
-import com.parabot.scripts.BasicLoop;
+import com.parabot.methods.Skills;
+import com.parabot.scripts.MessageEvent;
 import com.parabot.scripts.Script;
-import com.parabot.wrappers.GameObject;
-import org.phl0w.parabot.fTeaCups.utilities.Condition;
-import org.phl0w.parabot.fTeaCups.utilities.Functions;
-import org.phl0w.parabot.fTeaCups.utilities.State;
+import com.parabot.scripts.ScriptFormat;
+import com.parabot.scripts.Strategy;
+import interfaces.Painter;
+import org.phl0w.parabot.fTeaCups.strategies.Antiban;
+import org.phl0w.parabot.fTeaCups.strategies.Dropping;
+import org.phl0w.parabot.fTeaCups.strategies.Stealing;
 
-public class fTeaCups extends Script implements BasicLoop {
+import java.awt.*;
+import java.util.ArrayList;
 
-    final GameObject stall = GameObjects.getNearest(635);
+@ScriptFormat(author = "phl0w", name = "fTeaCups", category = "Thieving", description = "lol", version = 1.0d)
+public class fTeaCups extends Script implements Painter, MessageEvent {
 
-    @Override
-    public int loop() {
-        State s = getState();
-        switch (s) {
-            case INACTIVE:
-                stall.interact("Steal-from");
-                Functions.waitFor(3000, new Condition() {
-                    @Override
-                    public boolean validate() {
-                        return Players.getMyPlayer().getAnimation() != -1;
-                    }
-                });
-                break;
-            case BANKING:
-                break;
-            case WALKING:
-                Functions.sleep(300, 400);
-                break;
-            case STEALING:
-                Functions.sleep(300, 400);
-                break;
-        }
-        return 1000;
-    }
-
-    private State getState() {
-        if (Players.getMyPlayer().getAnimation() == -1 && stall.isOnScreen() && Inventory.getCount() < 28) {
-            return State.INACTIVE;
-        } else if (Inventory.getCount() == 28) {
-            return State.BANKING;
-        } else if (Walking.getDestination() != null) {
-            return State.WALKING;
-        } else if (Players.getMyPlayer().getAnimation() != -1) {
-            return State.STEALING;
-        }
-        return State.INACTIVE;
-    }
+    final ArrayList<Strategy> strategies = new ArrayList<Strategy>();
 
     @Override
     public boolean onExecute() {
+        strategies.add(new Dropping());
+        strategies.add(new Stealing());
+        strategies.add(new Antiban());
+        provide(strategies);
+        Variables.startTime = System.currentTimeMillis();
+        Variables.startLevel = Skills.getLevel(Skills.THIEVING);
+        Variables.startXp = Skills.getCurrentExp(Skills.THIEVING);
         return true;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Paint.onRepaint(g);
+    }
+
+    @Override
+    public void messageRecieved(String msg) {
+        if (msg.contains("successfully stole a cup")) {
+            Variables.stolen++;
+        }
     }
 }

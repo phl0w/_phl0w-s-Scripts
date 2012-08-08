@@ -6,19 +6,15 @@ public class Functions {
 
     final static Random r = new Random();
 
-    public static void sleep(int... args) {
-        switch (args.length) {
-            default:
-            case 1:
-                sleep(args[0]);
-                break;
-            case 2:
-                sleep(r.nextInt(args[1] - args[2]) + args[1]);
-                break;
-        }
+    public static void sleepBetween(int min, int max) {
+        sleep(r.nextInt(max - min) + min);
     }
 
-    private void sleep(int arg) {
+    public static int randomBetween(int min, int max) {
+        return r.nextInt((max - min) + min);
+    }
+
+    private static void sleep(int arg) {
         try {
             Thread.sleep(arg);
         } catch (InterruptedException ie) {
@@ -33,4 +29,30 @@ public class Functions {
         }
         return c.validate();
     }
+
+    public static String format(final long time) {
+        final StringBuilder t = new StringBuilder();
+        final long total_secs = time / 1000;
+        final long total_mins = total_secs / 60;
+        final long total_hrs = total_mins / 60;
+        final int secs = (int) total_secs % 60;
+        final int mins = (int) total_mins % 60;
+        final int hrs = (int) total_hrs % 24;
+        if (hrs < 10) {
+            t.append("0");
+        }
+        t.append(hrs);
+        t.append(":");
+        if (mins < 10) {
+            t.append("0");
+        }
+        t.append(mins);
+        t.append(":");
+        if (secs < 10) {
+            t.append("0");
+        }
+        t.append(secs);
+        return t.toString();
+    }
+
 }
