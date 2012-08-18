@@ -1,7 +1,7 @@
 package org.itbarbfisher.strategies;
 
+import org.itbarbfisher.user.Utilities;
 import org.itbarbfisher.user.Variables;
-import org.itplanker.functions.Functions;
 import org.powerbot.concurrent.Task;
 import org.powerbot.concurrent.strategy.Condition;
 import org.powerbot.concurrent.strategy.Strategy;
@@ -19,7 +19,7 @@ public class Urns extends Strategy implements Task {
     public void run() {
         if (Widgets.get(905, 14).validate()) {
             if (Widgets.get(905, 14).click(true)) {
-                Functions.waitFor(3000, new Condition() {
+                Utilities.waitFor(3000, new Condition() {
                     @Override
                     public boolean validate() {
                         return Inventory.getCount(20348) == 0;
@@ -28,7 +28,7 @@ public class Urns extends Strategy implements Task {
             }
         } else {
             if (Inventory.getItem(20348).getWidgetChild().interact("Teleport")) {
-                Functions.waitFor(2000, new Condition() {
+                Utilities.waitFor(2000, new Condition() {
                     @Override
                     public boolean validate() {
                         return Widgets.get(905, 14).validate();
