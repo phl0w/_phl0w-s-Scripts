@@ -1,11 +1,8 @@
 package org.itpotionmixer;
 
-import org.itpotionmixer.strategies.Antiban;
-import org.itpotionmixer.strategies.Banking;
-import org.itpotionmixer.strategies.ItemOnItem;
-import org.itpotionmixer.strategies.Mix;
-import org.itpotionmixer.user.Functions;
+import org.itpotionmixer.strategies.*;
 import org.itpotionmixer.user.Paint;
+import org.itpotionmixer.user.Utilities;
 import org.itpotionmixer.user.Variables;
 import org.itpotionmixer.user.iTPotionMixerGUI;
 import org.powerbot.concurrent.strategy.Strategy;
@@ -19,13 +16,13 @@ import org.powerbot.game.bot.event.listener.PaintListener;
 import javax.swing.*;
 import java.awt.*;
 
-@Manifest(authors = {"_phl0w"}, name = "iTPotionMixer", description = "Mix potions! Follow instructions on GUI.", version = 1.7, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
+@Manifest(authors = {"_phl0w"}, name = "iTPotionMixer", description = "Mix potions! Follow instructions on GUI.", version = 1.71, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
 public class iTPotionMixer extends ActiveScript implements MessageListener, PaintListener {
 
 
     @Override
     protected void setup() {
-        Variables.img = Functions.getImage("http://i45.tinypic.com/rmsgh3.png");
+        Variables.img = Utilities.getImage("http://i45.tinypic.com/rmsgh3.png");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -36,6 +33,7 @@ public class iTPotionMixer extends ActiveScript implements MessageListener, Pain
         provide(new Mix());
         provide(new ItemOnItem());
         provide(new Banking());
+        provide(new Drop());
         Strategy ab = new Antiban();
         ab.setLock(false);
         ab.setSync(true);

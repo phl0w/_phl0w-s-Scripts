@@ -1,5 +1,7 @@
 package org.itpotionmixer.user;
 
+import org.powerbot.game.bot.Context;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ public class iTPotionMixerGUI extends JFrame {
 
     private JCheckBox jCheckBox1;
     private JCheckBox jCheckBox2;
-    private JComboBox jComboBox1;
+    private JComboBox<String> jComboBox1;
 
     public iTPotionMixerGUI() {
         super("iTPotionMixer");
@@ -22,10 +24,10 @@ public class iTPotionMixerGUI extends JFrame {
         final JButton jButton1 = new JButton("Start");
         final JLabel jLabel1 = new JLabel("Select potion:");
 
-        jComboBox1 = new JComboBox();
+        jComboBox1 = new JComboBox<String>();
         jCheckBox1 = new JCheckBox("Antiban?");
         jCheckBox2 = new JCheckBox("Paint?");
-        jComboBox1.setModel(new DefaultComboBoxModel(new String[]{"Agility Potion", "Antifire", "Antipoison", "Attack Potion", "Combat Potion", "Crafting Potion", "Defence Potion", "Energy Potion", "Fishing Potion", "Fletching Potion", "Hunter Potion", "Magic Potion", "Prayer Potion", "Prayer Renewal", "Ranging Potion", "Restore Potion", "Saradomin Brew", "Serum 207", "Recover Special", "Strength Potion", "Super Antipoison", "Super Attack", "Super Defence", "Super Energy Potion", "Super Restore Potion", "Super Strength Potion", "Weapon Poison", "Zamorak Brew", "Extreme Attack", "Extreme Strength", "Extreme Defence", "Extreme Ranging", "Extreme Magic", "Overload", "Unfinished Avantoe", "Unfinished Cadantine", "Unfinished Dwarf Weed", "Unfinished Fellstalk", "Unfinished Guam", "Unfinished Harralander", "Unfinished Irit ", "Unfinished Kwuarm", "Unfinished Lantadyme", "Unfinished Marrentill", "Unfinished Ranarr", "Unfinished Snapdragon", "Unfinished Spirit Weed", "Unfinished Tarromin", "Unfinished Torstol", "Unfinished Wergali"}));
+        jComboBox1.setModel(new DefaultComboBoxModel<String>(new String[]{"Agility Potion", "Antifire", "Antipoison", "Attack Potion", "Combat Potion", "Crafting Potion", "Defence Potion", "Energy Potion", "Fishing Potion", "Fletching Potion", "Hunter Potion", "Summoning Potion", "Magic Potion", "Prayer Potion", "Prayer Renewal", "Ranging Potion", "Restore Potion", "Saradomin Brew", "Serum 207", "Recover Special", "Strength Potion", "Super Antipoison", "Super Attack", "Super Defence", "Super Energy Potion", "Super Restore Potion", "Super Strength Potion", "Weapon Poison", "Zamorak Brew", "Extreme Attack", "Extreme Strength", "Extreme Defence", "Extreme Ranging", "Extreme Magic", "Overload", "Unfinished Avantoe", "Unfinished Cadantine", "Unfinished Dwarf Weed", "Unfinished Fellstalk", "Unfinished Guam", "Unfinished Harralander", "Unfinished Irit ", "Unfinished Kwuarm", "Unfinished Lantadyme", "Unfinished Marrentill", "Unfinished Ranarr", "Unfinished Snapdragon", "Unfinished Spirit Weed", "Unfinished Tarromin", "Unfinished Torstol", "Unfinished Wergali"}));
 
         jButton1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -73,10 +75,13 @@ public class iTPotionMixerGUI extends JFrame {
 
     private void jButton1ActionPerformed() {
         System.out.println(jComboBox1.getSelectedItem().toString());
-        Variables.primary = Functions.getIngredients((String) jComboBox1.getSelectedItem())[0];
-        Variables.secondary = Functions.getIngredients((String) jComboBox1.getSelectedItem())[1];
+        Variables.primary = Utilities.getIngredients((String) jComboBox1.getSelectedItem())[0];
+        Variables.secondary = Utilities.getIngredients((String) jComboBox1.getSelectedItem())[1];
         System.out.println(Variables.primary + ":" + Variables.secondary);
         Variables.abSupport = jCheckBox1.isSelected();
+        if (!jCheckBox1.isSelected()) {
+            Context.get().b(2000);
+        }
         Variables.paintSupport = jCheckBox2.isSelected();
         Variables.guiInitialized = true;
         Variables.status = "gui done";

@@ -1,6 +1,6 @@
 package org.itpotionmixer.strategies;
 
-import org.itpotionmixer.user.Functions;
+import org.itpotionmixer.user.Utilities;
 import org.itpotionmixer.user.Variables;
 import org.powerbot.concurrent.Task;
 import org.powerbot.concurrent.strategy.Condition;
@@ -14,7 +14,7 @@ public class ItemOnItem extends Strategy implements Task {
 
     @Override
     public boolean validate() {
-        return Variables.guiInitialized && !Widgets.get(905, 14).validate() && !Functions.waitFor(1200, new Condition() {
+        return Variables.guiInitialized && !Widgets.get(905, 14).validate() && !Utilities.waitFor(1200, new Condition() {
             @Override
             public boolean validate() {
                 return Players.getLocal().getAnimation() != -1;
@@ -29,7 +29,7 @@ public class ItemOnItem extends Strategy implements Task {
         Item sec = Inventory.getItem(Variables.secondary);
         prim.getWidgetChild().interact("Use");
         sec.getWidgetChild().interact("Use");
-        Functions.waitFor(3000, new Condition() {
+        Utilities.waitFor(3000, new Condition() {
             @Override
             public boolean validate() {
                 return Widgets.get(905, 14).validate();

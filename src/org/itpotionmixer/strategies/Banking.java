@@ -10,7 +10,7 @@ public class Banking extends Strategy implements Task {
 
     @Override
     public boolean validate() {
-        return (Inventory.getCount(Variables.primary) == 0 || Inventory.getCount(Variables.secondary) == 0) && Variables.guiInitialized;
+        return (Inventory.getCount(Variables.primary) == 0 || Inventory.getCount(Variables.secondary) == 0) && Variables.guiInitialized && Inventory.getItem(14664) == null;
     }
 
     @Override
