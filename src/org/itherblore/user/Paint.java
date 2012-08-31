@@ -1,4 +1,4 @@
-package org.itpotionmixer.user;
+package org.itherblore.user;
 
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.tab.Skills;

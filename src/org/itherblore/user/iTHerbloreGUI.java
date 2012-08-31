@@ -1,4 +1,4 @@
-package org.itpotionmixer.user;
+package org.itherblore.user;
 
 import org.powerbot.game.bot.Context;
 
@@ -6,14 +6,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class iTPotionMixerGUI extends JFrame {
+public class iTHerbloreGUI extends JFrame {
 
     private JCheckBox jCheckBox1;
     private JCheckBox jCheckBox2;
     private JComboBox<String> jComboBox1;
 
-    public iTPotionMixerGUI() {
-        super("iTPotionMixer");
+    public iTHerbloreGUI() {
+        super("iTHerblore");
         initComponents();
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -75,8 +75,9 @@ public class iTPotionMixerGUI extends JFrame {
 
     private void jButton1ActionPerformed() {
         System.out.println(jComboBox1.getSelectedItem().toString());
-        Variables.primary = Utilities.getIngredients((String) jComboBox1.getSelectedItem())[0];
-        Variables.secondary = Utilities.getIngredients((String) jComboBox1.getSelectedItem())[1];
+        //Variables.primary = Utilities.getIngredients((String) jComboBox1.getSelectedItem())[0];
+        Variables.primary =
+                Variables.secondary = Utilities.getIngredients((String) jComboBox1.getSelectedItem())[1];
         System.out.println(Variables.primary + ":" + Variables.secondary);
         Variables.abSupport = jCheckBox1.isSelected();
         if (!jCheckBox1.isSelected()) {

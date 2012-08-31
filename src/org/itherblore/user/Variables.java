@@ -1,4 +1,4 @@
-package org.itpotionmixer.user;
+package org.itherblore.user;
 
 import java.awt.*;
 
@@ -13,12 +13,13 @@ public class Variables {
     public static boolean abSupport = true;
     public static boolean paintSupport = true;
     public static boolean guiInitialized;
+    public static boolean pots;
+    public static boolean quick;
 
     public static String status = "n/a";
 
     public static long startTime;
 
     public static Image img = null;
-    public static Font font = null;
 
 }

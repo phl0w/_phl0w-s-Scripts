@@ -1,13 +1,12 @@
-package org.itpotionmixer.strategies;
+package org.itherblore.strategies.mixing;
 
-import org.itpotionmixer.user.Variables;
-import org.powerbot.concurrent.Task;
+import org.itherblore.user.Variables;
 import org.powerbot.concurrent.strategy.Strategy;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.util.Random;
 import org.powerbot.game.api.util.Time;
 
-public class Mix extends Strategy implements Task {
+public class Mix extends Strategy implements Runnable {
 
     @Override
     public boolean validate() {

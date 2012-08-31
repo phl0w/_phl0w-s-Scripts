@@ -1,4 +1,4 @@
-package org.itpotionmixer.user;
+package org.itherblore.user;
 
 import org.powerbot.concurrent.strategy.Condition;
 import org.powerbot.game.api.util.Time;
@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.net.URL;
 
-public class Functions {
+public class Utilities {
 
     private static final Object[][] POTION_DATA = {{227, 249, "Unfinished Guam"}, {227, 251, "Unfinished Marrentill"},
             {227, 253, "Unfinished Tarromin"}, {227, 255, "Unfinished Harralander"}, {227, 257, "Unfinished Ranarr"},
@@ -24,12 +24,12 @@ public class Functions {
             {107, 239, "Super Defence"}, {2483, 241, "Antifire"}, {109, 245, "Ranging Potion"}, {2483, 3138, "Magic Potion"},
             {111, 247, "Zamorak Brew"}, {3002, 6693, "Saradomin Brew"}, {21628, 21622, "Prayer Renewal"}, {95, 592, "Serum 207"},
             {145, 261, "Extreme Attack"}, {157, 267, "Extreme Strength"}, {163, 2481, "Extreme Defence"},
-            {169, 12539, "Extreme Ranging"}, {3042, 9594, "Extreme Magic"}, {15309, 15313, "Overload"}, {3018, 5972, "Recover Special"}};
+            {169, 12539, "Extreme Ranging"}, {3042, 9594, "Extreme Magic"}, {15309, 15313, "Overload"}, {3018, 5972, "Recover Special"}, {12181, 12109, "Summoning Potion"}};
 
     public static int[] getIngredients(String potion) {
-        for (int i = 0; i < POTION_DATA.length; i++) {
-            if (POTION_DATA[i][2].equals(potion)) {
-                return new int[]{(Integer) POTION_DATA[i][0], (Integer) POTION_DATA[i][1]};
+        for (Object[] aPOTION_DATA : POTION_DATA) {
+            if (aPOTION_DATA[2].equals(potion)) {
+                return new int[]{(Integer) aPOTION_DATA[0], (Integer) aPOTION_DATA[1]};
             }
         }
         return new int[]{-1, -1};
