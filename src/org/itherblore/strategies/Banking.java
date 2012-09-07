@@ -1,6 +1,8 @@
 package org.itherblore.strategies;
 
+import org.itbarbfisher.user.Utilities;
 import org.itherblore.user.Variables;
+import org.powerbot.concurrent.strategy.Condition;
 import org.powerbot.concurrent.strategy.Strategy;
 import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.tab.Inventory;
@@ -16,14 +18,22 @@ public class Banking extends Strategy implements Runnable {
 
     @Override
     public boolean validate() {
-        return (Inventory.getCount(Variables.primary) == 0 || Inventory.getCount(Variables.secondary) == 0) && Variables.guiInitialized && Inventory.getItem(14664) == null;
+        return (Variables.pots ? (Inventory.getCount(Variables.primary) == 0 || Inventory.getCount(Variables.secondary) == 0) : Inventory.getCount(Variables.primary) == 0) && Variables.guiInitialized && Inventory.getItem(14664) == null;
     }
 
     @Override
     public void run() {
-        Bank.open();
         if (Bank.isOpen()) {
-            Bank.depositInventory();
+            if (Variables.secondary == 12539) {
+                Utilities.waitFor(2000, new Condition() {
+                    @Override
+                    public boolean validate() {
+                        return !(Bank.deposit(15325, 0) && Inventory.getCount(Variables.primary) > 0) || Bank.deposit(Variables.primary, 0);
+                    }
+                });
+            } else {
+                Bank.depositInventory();
+            }
             if (Variables.pots) {
                 if (Variables.primary == 15309 && Variables.secondary == 15313) { // Overloads
                     Bank.withdraw(Variables.primary, 4);
@@ -33,10 +43,21 @@ public class Banking extends Strategy implements Runnable {
                     Bank.withdraw(15325, 4);
                     Bank.withdraw(269, 4);
                 } else {
-                    Bank.withdraw(Variables.primary, Variables.primary == 169 ? 0 : 14);
-                    if (Variables.secondary != 12539) {
+                    if (Bank.getItemCount(Variables.primary) == 0 || Bank.getItemCount(Variables.secondary) == 0) {
+                        Bank.close();
+                        Game.logout(true);
+                        log.info("All out of supplies...");
+                        get().getActiveScript().stop();
+                    }
+
+                    if (Variables.secondary == 12539) {
+                        if (Inventory.getCount(12539) == 0 && Bank.getItemCount(12539) > 0) {
+                            Bank.withdraw(12539, 0);
+                        }
+                    } else if (Variables.secondary != 12539) {
                         Bank.withdraw(Variables.secondary, 14);
                     }
+                    Bank.withdraw(Variables.primary, Variables.primary == 169 ? 0 : 14);
                 }
             } else {
                 if (Bank.getItemCount(Variables.primary) == 0) {
@@ -49,6 +70,8 @@ public class Banking extends Strategy implements Runnable {
                 }
             }
             Bank.close();
+        } else {
+            Bank.open();
         }
     }
 }

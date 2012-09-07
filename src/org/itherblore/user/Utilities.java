@@ -10,29 +10,110 @@ import java.net.URL;
 
 public class Utilities {
 
-    private static final Object[][] POTION_DATA = {{227, 249, "Unfinished Guam"}, {227, 251, "Unfinished Marrentill"},
-            {227, 253, "Unfinished Tarromin"}, {227, 255, "Unfinished Harralander"}, {227, 257, "Unfinished Ranarr"},
-            {227, 12224, "Unfinished Spirit Weed"}, {227, 14886, "Unfinished Wergali"}, {227, 259, "Unfinished Irit"},
-            {227, 211, "Unfinished Avantoe"}, {227, 263, "Unfinished Kwuarm"}, {227, 3000, "Unfinished Snapdragon"},
-            {227, 265, "Unfinished Cadantine"}, {227, 2535, "Unfinished Lantadyme"}, {227, 267, "Unfinished Dwarf Weed"},
-            {227, 271, "Unfinished Torstol"}, {227, 21676, "Unfinished Fellstalk"}, {91, 221, "Attack Potion"},
-            {93, 235, "Antipoison"}, {95, 225, "Strength Potion"}, {97, 223, "Restore Potion"}, {97, 1975, "Energy Potion"},
-            {99, 239, "Defence Potion"}, {3002, 2152, "Agility Potion"}, {97, 9736, "Combat Potion"}, {99, 231, "Prayer Potion"},
-            {101, 221, "Super Attack Potion"}, {101, 235, "Super Antipoison"}, {103, 231, "Fishing Potion"},
-            {103, 2970, "Super Energy Potion"}, {103, 10111, "Hunter Potion"}, {105, 225, "Super Strength Potion"},
-            {14856, 11525, "Fletching Potion"}, {105, 241, "Weapon Poison"}, {3004, 223, "Super Restore Potion"},
-            {107, 239, "Super Defence"}, {2483, 241, "Antifire"}, {109, 245, "Ranging Potion"}, {2483, 3138, "Magic Potion"},
-            {111, 247, "Zamorak Brew"}, {3002, 6693, "Saradomin Brew"}, {21628, 21622, "Prayer Renewal"}, {95, 592, "Serum 207"},
-            {145, 261, "Extreme Attack"}, {157, 267, "Extreme Strength"}, {163, 2481, "Extreme Defence"},
-            {169, 12539, "Extreme Ranging"}, {3042, 9594, "Extreme Magic"}, {15309, 15313, "Overload"}, {3018, 5972, "Recover Special"}, {12181, 12109, "Summoning Potion"}};
+    private enum Herbs {
+        GUAM(199),
+        MARRENTIL(201),
+        TARROMIN(203),
+        HARRALANDER(205),
+        RANARR(207),
+        IRIT(209),
+        AVANTOE(211),
+        KWUARM(213),
+        CADANTINE(215),
+        LANTADYME(2485),
+        DWARF_WEED(217),
+        TORSTOL(221),
+        TOADFLAX(3049),
+        SPIRIT_WEED(12174),
+        WERGALI(14836),
+        SNAPDRAGON(3051),
+        FELLSTALK(21626);
+
+        int id;
+
+        Herbs(int id) {
+            this.id = id;
+        }
+    }
+
+    private enum Potions {
+
+        UNFINISHED_GUAM(227, 249),
+        UNFINISHED_MARRENTILL(227, 251),
+        UNFINISHED_TARROMIN(227, 253),
+        UNFINISHED_HARRALANDER(227, 255),
+        UNFINISHED_RANARR(227, 257),
+        UNFINISHED_SPIRIT_WEED(227, 12224),
+        UNFINISHED_WERGALI(227, 14886),
+        UNFINISHED_IRIT(227, 259),
+        UNFINISHED_AVANTOE(227, 211),
+        UNFINISHED_KWUARM(227, 263),
+        UNFINISHED_SNAPDRAGON(227, 3000),
+        UNFINISHED_CADANTINE(227, 265),
+        UNFINISHED_LANTADYME(227, 2535),
+        UNFINISHED_DWARF_WEED(227, 267),
+        UNFINISHED_TORSTOL(227, 271),
+        UNFINISHED_FELLSTALK(227, 21676),
+        UNFINISHED_TOADFLAX(227, 2998),
+        ATTACK_POTION(91, 221),
+        ANTIPOISON(93, 235),
+        STRENGTH_POTION(95, 225),
+        RESTORE_POTION(97, 223),
+        ENERGY_POTION(97, 1975),
+        DEFENCE_POTION(99, 239),
+        AGILITY_POTION(3002, 2152),
+        COMBAT_POTION(97, 9736),
+        PRAYER_POTION(99, 231),
+        SUPER_ATTACK_POTION(101, 221),
+        SUPER_ANTIPOISON(101, 235),
+        FISHING_POTION(103, 231),
+        SUPER_ENERGY_POTION(103, 2970),
+        HUNTER_POTION(103, 10111),
+        SUPER_STRENGTH_POTION(105, 225),
+        FLETCHING_POTION(14856, 11525),
+        WEAPON_POISON(105, 241),
+        SUPER_RESTORE_POTION(3004, 223),
+        SUPER_DEFENCE(107, 239),
+        ANTIFIRE(2483, 241),
+        RANGING_POTION(109, 245),
+        MAGIC_POTION(2483, 3138),
+        ZAMORAK_BREW(111, 247),
+        SARADOMIN_BREW(3002, 6693),
+        PRAYER_RENEWAL(21628, 21622),
+        SERUM_207(95, 592),
+        SUPER_ANTIFIRE(2454, 4621),
+        EXTREME_ATTACK(145, 261),
+        EXTREME_STRENGTH(157, 267),
+        EXTREME_DEFENCE(163, 2481),
+        EXTREME_RANGING(169, 12539),
+        EXTREME_MAGIC(3042, 9594),
+        OVERLOAD(15309, 15313),
+        RECOVER_SPECIAL(3018, 5972),
+        SUMMONING_POTION(12181, 12109);
+        int primary, secondary;
+
+        Potions(int primary, int secondary) {
+            this.primary = primary;
+            this.secondary = secondary;
+        }
+    }
 
     public static int[] getIngredients(String potion) {
-        for (Object[] aPOTION_DATA : POTION_DATA) {
-            if (aPOTION_DATA[2].equals(potion)) {
-                return new int[]{(Integer) aPOTION_DATA[0], (Integer) aPOTION_DATA[1]};
+        for (Potions p : Potions.values()) {
+            if (p.name().equals(potion.replaceAll((" "), "_").toUpperCase())) {
+                return new int[]{p.primary, p.secondary};
             }
         }
         return new int[]{-1, -1};
+    }
+
+    public static int getHerb(String herb) {
+        for (Herbs h : Herbs.values()) {
+            if (h.name().equals(herb.replaceAll((" "), "_").toUpperCase())) {
+                return h.id;
+            }
+        }
+        return -1;
     }
 
     public static boolean waitFor(long timeout, Condition condition) {

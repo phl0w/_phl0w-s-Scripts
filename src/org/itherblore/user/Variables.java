@@ -13,8 +13,8 @@ public class Variables {
     public static boolean abSupport = true;
     public static boolean paintSupport = true;
     public static boolean guiInitialized;
-    public static boolean pots;
-    public static boolean quick;
+    public static boolean pots = true;
+    public static boolean quick = false;
 
     public static String status = "n/a";
 

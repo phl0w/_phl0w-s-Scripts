@@ -13,12 +13,14 @@ public class ItemOnItem extends Strategy implements Runnable {
 
     @Override
     public boolean validate() {
-        return Variables.guiInitialized && !Widgets.get(905, 14).validate() && !Utilities.waitFor(1200, new Condition() {
-            @Override
-            public boolean validate() {
-                return Players.getLocal().getAnimation() != -1;
-            }
-        });
+        return Variables.guiInitialized && !Widgets.get(905, 14).validate() && (
+                (Inventory.isFull() && Variables.primary != 169)
+                        || !Utilities.waitFor(1200, new Condition() {
+                    @Override
+                    public boolean validate() {
+                        return Players.getLocal().getAnimation() != -1;
+                    }
+                }));
     }
 
     @Override
@@ -26,13 +28,15 @@ public class ItemOnItem extends Strategy implements Runnable {
         Variables.status = "ioi";
         Item prim = Inventory.getItem(Variables.primary);
         Item sec = Inventory.getItem(Variables.secondary);
-        prim.getWidgetChild().interact("Use");
-        sec.getWidgetChild().interact("Use");
-        Utilities.waitFor(3000, new Condition() {
-            @Override
-            public boolean validate() {
-                return Widgets.get(905, 14).validate();
+        if (prim.getWidgetChild().interact("Use")) {
+            if (sec.getWidgetChild().interact("Use")) {
+                Utilities.waitFor(3000, new Condition() {
+                    @Override
+                    public boolean validate() {
+                        return Widgets.get(905, 14).validate();
+                    }
+                });
             }
-        });
+        }
     }
 }

@@ -22,13 +22,12 @@ import org.powerbot.game.bot.event.listener.PaintListener;
 import javax.swing.*;
 import java.awt.*;
 
-@Manifest(authors = {"_phl0w"}, name = "iTHerblore", description = "Mixes potions & cleans herbs! - Follow instructions on the GUI.", version = 1.8, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
+@Manifest(authors = {"_phl0w"}, name = "iTHerblore", description = "Mixes potions & cleans herbs! - Follow instructions on the GUI.", version = 1.81, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
 public class iTHerblore extends ActiveScript implements MessageListener, PaintListener {
 
     private static final StrategyGroup POTION_MIXING = new StrategyGroup();
     private static final StrategyGroup HERB_CLEANING = new StrategyGroup();
 
-    //TODO: Update GUI for 1.8
     @Override
     protected void setup() {
         Variables.img = Utilities.getImage("http://i45.tinypic.com/rmsgh3.png");
@@ -46,9 +45,6 @@ public class iTHerblore extends ActiveScript implements MessageListener, PaintLi
         POTION_MIXING.group(new ItemOnItem());
         POTION_MIXING.group(new Mix());
         HERB_CLEANING.group(new Clean());
-
-        provide(POTION_MIXING);
-        provide(HERB_CLEANING);
 
         provide(new Banking());
         provide(new Drop());
@@ -73,7 +69,7 @@ public class iTHerblore extends ActiveScript implements MessageListener, PaintLi
     @Override
     public void messageReceived(MessageEvent arg0) {
         String msg = arg0.getMessage();
-        if (msg.contains("you put the") || msg.contains("into the vial") || msg.contains("mix the") || msg.contains("serum 207")) {
+        if (msg.contains("you put the") || msg.contains("into the vial") || msg.contains("mix the") || msg.contains("serum 207") || msg.contains("clean the dirt")) {
             Variables.made++;
         }
     }
@@ -89,6 +85,8 @@ public class iTHerblore extends ActiveScript implements MessageListener, PaintLi
         public void run() {
             provide(Variables.pots ? POTION_MIXING : HERB_CLEANING);
             revoke(this);
+            System.out.println(Variables.primary);
+            System.out.println(Variables.secondary);
         }
     }
 }
