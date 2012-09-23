@@ -1,28 +1,27 @@
 package org.itbarbfisher.strategies;
 
 import org.itbarbfisher.user.Variables;
-import org.powerbot.concurrent.Task;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.widget.Camera;
 import org.powerbot.game.api.util.Random;
-import org.powerbot.game.api.util.Time;
 
-public class Antiban extends Strategy implements Task {
+public class Antiban extends Node {
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         return true;
     }
 
     @Override
-    public void run() {
+    public void execute() {
         if (Random.nextInt(1, 250) < 14) {
             executeAntiban();
         }
-        Time.sleep(Random.nextInt(1000, 2000));
+        Task.sleep(Random.nextInt(1000, 2000));
     }
 
     public void executeAntiban() {
@@ -41,12 +40,12 @@ public class Antiban extends Strategy implements Task {
                 dx = Random.nextInt(-30, 30);
                 dy = Random.nextInt(-30, 30);
                 Mouse.move(Mouse.getX() + dx, Mouse.getY() + dy);
-                Time.sleep(Random.nextInt(20, 150));
+                Task.sleep(Random.nextInt(20, 150));
                 break;
             case 4:
                 Tabs.STATS.open();
                 Widgets.get(320, 30).hover();
-                Time.sleep(1200, 1800);
+                Task.sleep(1200, 1800);
                 Tabs.INVENTORY.open();
                 break;
         }

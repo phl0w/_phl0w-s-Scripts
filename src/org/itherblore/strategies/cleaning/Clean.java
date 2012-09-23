@@ -1,25 +1,25 @@
 package org.itherblore.strategies.cleaning;
 
 import org.itherblore.user.Variables;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.input.Mouse;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Random;
-import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.wrappers.node.Item;
 
-public class Clean extends Strategy implements Runnable {
+public class Clean extends Node {
 
     private final int[] path = {0, 4, 8, 12, 16, 20, 24, 1, 5, 9, 13, 17, 21, 25, 2, 6, 10, 14, 18, 22, 26, 3, 7, 11, 15, 19, 23, 27};
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         return Variables.guiInitialized && Inventory.getCount(Variables.primary) > 0 && !Bank.isOpen();
     }
 
     @Override
-    public void run() {
+    public void execute() {
         for (int slot = 0; slot < path.length; slot++) {
             Item item = Inventory.getItemAt(path[slot]);
             if (item.getId() == Variables.primary) {
@@ -37,6 +37,6 @@ public class Clean extends Strategy implements Runnable {
                 }
             }
         }
-        Time.sleep(400);
+        Task.sleep(400);
     }
 }

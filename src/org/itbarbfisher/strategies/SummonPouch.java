@@ -1,27 +1,26 @@
 package org.itbarbfisher.strategies;
 
+import org.itbarbfisher.user.Condition;
 import org.itbarbfisher.user.Utilities;
 import org.itbarbfisher.user.Variables;
-import org.powerbot.concurrent.Task;
-import org.powerbot.concurrent.strategy.Condition;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Settings;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.tab.Skills;
 import org.powerbot.game.api.util.Random;
-import org.powerbot.game.api.util.Time;
 
-public class SummonPouch extends Strategy implements Task {
+public class SummonPouch extends Node {
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         return Variables.guiInitialized && Settings.get(448) == -1 || Widgets.get(662, 1).getModelId() == -1 && Variables.pouch != -1
                 && Inventory.getCount(Variables.pouch) > 0;
     }
 
     @Override
-    public void run() {
+    public void execute() {
         if (Skills.getLevel(Skills.SUMMONING) < 10) {
             if (canDrink()) {
                 drink();
@@ -35,7 +34,7 @@ public class SummonPouch extends Strategy implements Task {
                     }
                 });
             }
-            Time.sleep(Random.nextInt(300, 400));
+            Task.sleep(Random.nextInt(300, 400));
         }
     }
 
@@ -55,7 +54,7 @@ public class SummonPouch extends Strategy implements Task {
         for (int pot : pots) {
             if (Inventory.getItem(pot) != null) {
                 if (Inventory.getItem(pot).getWidgetChild().interact("Drink")) {
-                    Time.sleep(800);
+                    Task.sleep(800);
                     Utilities.waitFor(2000, new Condition() {
                         @Override
                         public boolean validate() {
@@ -63,7 +62,7 @@ public class SummonPouch extends Strategy implements Task {
                         }
                     });
                 }
-                Time.sleep(Random.nextInt(300, 400));
+                Task.sleep(Random.nextInt(300, 400));
             }
         }
     }

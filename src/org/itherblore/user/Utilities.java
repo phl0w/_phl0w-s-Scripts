@@ -1,7 +1,6 @@
 package org.itherblore.user;
 
-import org.powerbot.concurrent.strategy.Condition;
-import org.powerbot.game.api.util.Time;
+import org.powerbot.core.script.job.Task;
 import org.powerbot.game.api.util.Timer;
 
 import javax.imageio.ImageIO;
@@ -119,7 +118,7 @@ public class Utilities {
     public static boolean waitFor(long timeout, Condition condition) {
         Timer timer = new Timer(timeout);
         while (timer.isRunning() && !condition.validate()) {
-            Time.sleep(50);
+            Task.sleep(50);
         }
         return condition.validate();
     }

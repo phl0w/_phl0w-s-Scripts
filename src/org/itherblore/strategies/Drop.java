@@ -1,24 +1,24 @@
 package org.itherblore.strategies;
 
+import org.itherblore.user.Condition;
 import org.itherblore.user.Utilities;
-import org.powerbot.concurrent.strategy.Condition;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.wrappers.node.Item;
 
-public class Drop extends Strategy implements Runnable {
+public class Drop extends Node {
 
     Item drop = Inventory.getItem(14664, 24154);
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         drop = Inventory.getItem(14664, 24154);
         return !Bank.isOpen() && drop != null;
     }
 
     @Override
-    public void run() {
+    public void execute() {
         switch (drop.getId()) {
             case 14664:
                 if (drop.getWidgetChild().interact("Drop")) {

@@ -11,7 +11,7 @@ public class GUI extends JFrame {
     private JRadioButton jRadioButton2;
     private JRadioButton jRadioButton3;
     private JRadioButton jRadioButton4;
-    private JComboBox jComboBox1;
+    private JComboBox<String> jComboBox1;
 
     public GUI() {
         super("iTBarbFisher");
@@ -26,7 +26,7 @@ public class GUI extends JFrame {
         jRadioButton2 = new JRadioButton("Slow dropping");
         jRadioButton3 = new JRadioButton("Enabled");
         jRadioButton4 = new JRadioButton("Disabled");
-        jComboBox1 = new JComboBox();
+        jComboBox1 = new JComboBox<String>();
         final JLabel jLabel1 = new JLabel("Dropping");
         final JLabel jLabel2 = new JLabel("Summoning");
         final JLabel jLabel3 = new JLabel("Have summong/super restore potion");

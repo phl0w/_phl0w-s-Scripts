@@ -10,28 +10,50 @@ import org.itherblore.user.Paint;
 import org.itherblore.user.Utilities;
 import org.itherblore.user.Variables;
 import org.itherblore.user.iTHerbloreGUI;
-import org.powerbot.concurrent.strategy.Strategy;
-import org.powerbot.concurrent.strategy.StrategyGroup;
-import org.powerbot.game.api.ActiveScript;
+import org.powerbot.core.event.events.MessageEvent;
+import org.powerbot.core.event.listeners.MessageListener;
+import org.powerbot.core.event.listeners.PaintListener;
+import org.powerbot.core.script.ActiveScript;
+import org.powerbot.core.script.job.state.Node;
+import org.powerbot.core.script.job.state.Tree;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.tab.Skills;
-import org.powerbot.game.bot.event.MessageEvent;
-import org.powerbot.game.bot.event.listener.MessageListener;
-import org.powerbot.game.bot.event.listener.PaintListener;
+import org.powerbot.game.api.util.Random;
 
 import javax.swing.*;
 import java.awt.*;
 
-@Manifest(authors = {"_phl0w"}, name = "iTHerblore", description = "Mixes potions & cleans herbs! - Follow instructions on the GUI.", version = 1.81, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
+@Manifest(authors = {"_phl0w"}, name = "iTHerblore", description = "Mixes potions & cleans herbs! - Follow instructions on the GUI.", version = 1.82, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
 public class iTHerblore extends ActiveScript implements MessageListener, PaintListener {
 
-    private static final StrategyGroup POTION_MIXING = new StrategyGroup();
-    private static final StrategyGroup HERB_CLEANING = new StrategyGroup();
+
+    private Tree jobs = null;
 
     @Override
-    protected void setup() {
-        Variables.img = Utilities.getImage("http://i45.tinypic.com/rmsgh3.png");
+    public int loop() {
+        if (!Variables.guiInitialized) {
+            return Random.nextInt(400, 600);
+        } else {
+            if (jobs == null) {
+                if (Variables.pots) {
+                    jobs = new Tree(new Node[]{new ItemOnItem(), new Mix(), new Banking(), new Drop(), new Antiban()});
+                } else {
+                    jobs = new Tree(new Node[]{new Clean(), new Banking(), new Drop(), new Antiban()});
+                }
+            }
+            final Node job = jobs.state();
+            if (job != null) {
+                jobs.set(job);
+                getContainer().submit(job);
+                job.join();
+            }
+        }
+        return Random.nextInt(200, 300);
+    }
 
+    @Override
+    public void onStart() {
+        Variables.img = Utilities.getImage("http://i45.tinypic.com/rmsgh3.png");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -39,21 +61,6 @@ public class iTHerblore extends ActiveScript implements MessageListener, PaintLi
                 ui.setVisible(true);
             }
         });
-
-        provide(new GUI());
-
-        POTION_MIXING.group(new ItemOnItem());
-        POTION_MIXING.group(new Mix());
-        HERB_CLEANING.group(new Clean());
-
-        provide(new Banking());
-        provide(new Drop());
-
-        Strategy ab = new Antiban();
-        ab.setLock(false);
-        ab.setSync(true);
-        provide(ab);
-
         Variables.startTime = System.currentTimeMillis();
         Variables.startXp = Skills.getExperience(Skills.HERBLORE);
         Variables.startLevel = Skills.getLevel(Skills.HERBLORE);
@@ -71,22 +78,6 @@ public class iTHerblore extends ActiveScript implements MessageListener, PaintLi
         String msg = arg0.getMessage();
         if (msg.contains("you put the") || msg.contains("into the vial") || msg.contains("mix the") || msg.contains("serum 207") || msg.contains("clean the dirt")) {
             Variables.made++;
-        }
-    }
-
-    private class GUI extends Strategy implements Runnable {
-
-        @Override
-        public boolean validate() {
-            return Variables.guiInitialized;
-        }
-
-        @Override
-        public void run() {
-            provide(Variables.pots ? POTION_MIXING : HERB_CLEANING);
-            revoke(this);
-            System.out.println(Variables.primary);
-            System.out.println(Variables.secondary);
         }
     }
 }

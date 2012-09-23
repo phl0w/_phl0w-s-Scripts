@@ -1,23 +1,23 @@
 package org.itherblore.strategies.mixing;
 
 import org.itherblore.user.Variables;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.util.Random;
-import org.powerbot.game.api.util.Time;
 
-public class Mix extends Strategy implements Runnable {
+public class Mix extends Node {
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         return Variables.guiInitialized && Widgets.get(905, 14).validate();
 
     }
 
     @Override
-    public void run() {
+    public void execute() {
         Widgets.get(905, 14).click(true);
         Variables.status = "mixing";
-        Time.sleep(Random.nextInt(400, 900));
+        Task.sleep(Random.nextInt(400, 900));
     }
 }

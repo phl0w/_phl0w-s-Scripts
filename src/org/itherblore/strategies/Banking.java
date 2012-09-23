@@ -1,9 +1,9 @@
 package org.itherblore.strategies;
 
-import org.itbarbfisher.user.Utilities;
+import org.itherblore.user.Condition;
+import org.itherblore.user.Utilities;
 import org.itherblore.user.Variables;
-import org.powerbot.concurrent.strategy.Condition;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
@@ -12,17 +12,17 @@ import java.util.logging.Logger;
 
 import static org.powerbot.game.bot.Context.get;
 
-public class Banking extends Strategy implements Runnable {
+public class Banking extends Node {
 
     private final Logger log = Logger.getLogger(Banking.class.getName());
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         return (Variables.pots ? (Inventory.getCount(Variables.primary) == 0 || Inventory.getCount(Variables.secondary) == 0) : Inventory.getCount(Variables.primary) == 0) && Variables.guiInitialized && Inventory.getItem(14664) == null;
     }
 
     @Override
-    public void run() {
+    public void execute() {
         if (Bank.isOpen()) {
             if (Variables.secondary == 12539) {
                 Utilities.waitFor(2000, new Condition() {
@@ -47,7 +47,7 @@ public class Banking extends Strategy implements Runnable {
                         Bank.close();
                         Game.logout(true);
                         log.info("All out of supplies...");
-                        get().getActiveScript().stop();
+                        get().getScriptHandler().stop();
                     }
 
                     if (Variables.secondary == 12539) {
@@ -64,7 +64,7 @@ public class Banking extends Strategy implements Runnable {
                     Bank.close();
                     Game.logout(true);
                     log.info("All out of herbs...");
-                    get().getActiveScript().stop();
+                    get().getScriptHandler().stop();
                 } else {
                     Bank.withdraw(Variables.primary, 0);
                 }

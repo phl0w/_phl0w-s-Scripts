@@ -5,14 +5,17 @@ import org.itbarbfisher.user.GUI;
 import org.itbarbfisher.user.Paint;
 import org.itbarbfisher.user.Utilities;
 import org.itbarbfisher.user.Variables;
-import org.powerbot.game.api.ActiveScript;
+import org.powerbot.core.event.events.MessageEvent;
+import org.powerbot.core.event.listeners.MessageListener;
+import org.powerbot.core.event.listeners.PaintListener;
+import org.powerbot.core.script.ActiveScript;
+import org.powerbot.core.script.job.state.Node;
+import org.powerbot.core.script.job.state.Tree;
 import org.powerbot.game.api.Manifest;
 import org.powerbot.game.api.methods.tab.Skills;
+import org.powerbot.game.api.util.Random;
 import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.Tile;
-import org.powerbot.game.bot.event.MessageEvent;
-import org.powerbot.game.bot.event.listener.MessageListener;
-import org.powerbot.game.bot.event.listener.PaintListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +23,30 @@ import java.awt.*;
 @Manifest(
         authors = {"_phl0w"},
         name = "iTBarbFisher",
-        version = 1.7,
+        version = 1.8,
         description = "Does the barbarian fishing training! - Have barbarian rod in your toolbelt & start near the fishing spots!",
         website = "http://www.powerbot.org/community/topic/697455-itbarbfisher-fastest-fishing-xp-in-the-game-fishingagility-xp-50k-xph/")
 public class iTBarbFisher extends ActiveScript implements PaintListener, MessageListener {
 
+    private Tree jobs = null;
+
     @Override
-    protected void setup() {
+    public int loop() {
+        if (jobs == null) {
+            jobs = new Tree(new Node[]{new Fish(), new Drop(), new Walker(), new Antiban(), new SummonPouch(), new Urns()});
+        }
+        final Node node = jobs.state();
+        if (node != null) {
+            jobs.set(node);
+            getContainer().submit(node);
+            node.join();
+            return 0;
+        }
+        return Random.nextInt(200, 300);
+    }
+
+    @Override
+    public void onStart() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -41,12 +61,6 @@ public class iTBarbFisher extends ActiveScript implements PaintListener, Message
         Variables.startAgilityExp = Skills.getExperience(Skills.AGILITY);
         Variables.inactivityTimer = new Timer(0);
         Variables.startTile = new Tile(2499, 3508, 0);
-        provide(new Fish());
-        provide(new Drop());
-        provide(new Walker());
-        provide(new Antiban());
-        provide(new SummonPouch());
-        provide(new Urns());
         Utilities.doUpdates("http://phl0w.site88.net/scripts/barb.php");
     }
 

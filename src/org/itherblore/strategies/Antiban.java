@@ -1,26 +1,26 @@
 package org.itherblore.strategies;
 
 import org.itherblore.user.Variables;
-import org.powerbot.concurrent.strategy.Strategy;
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.widget.Camera;
 import org.powerbot.game.api.util.Random;
-import org.powerbot.game.api.util.Time;
 
-public class Antiban extends Strategy implements Runnable {
+public class Antiban extends Node {
 
     @Override
-    public boolean validate() {
+    public boolean activate() {
         return Variables.abSupport && Variables.guiInitialized && Players.getLocal().getAnimation() != -1;
     }
 
     @Override
-    public void run() {
+    public void execute() {
         Variables.status = "ab";
         if (Random.nextInt(1, 15) <= 2) {
             executeAntiBan();
         }
-        Time.sleep(1000);
+        Task.sleep(1000);
     }
 
     private void executeAntiBan() {
