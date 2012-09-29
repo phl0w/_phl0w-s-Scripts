@@ -23,7 +23,7 @@ import org.powerbot.game.api.util.Random;
 import javax.swing.*;
 import java.awt.*;
 
-@Manifest(authors = {"_phl0w"}, name = "iTHerblore", description = "Mixes potions & cleans herbs! - Follow instructions on the GUI.", version = 1.82, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
+@Manifest(authors = {"_phl0w"}, name = "iTHerblore", description = "Mixes potions & cleans herbs! - Follow instructions on the GUI.", version = 1.83, website = "http://www.powerbot.org/community/topic/674277-potionmixer-mix-potions-for-you/")
 public class iTHerblore extends ActiveScript implements MessageListener, PaintListener {
 
 

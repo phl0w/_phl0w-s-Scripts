@@ -45,11 +45,11 @@ public class Utilities {
         UNFINISHED_SPIRIT_WEED(227, 12224),
         UNFINISHED_WERGALI(227, 14886),
         UNFINISHED_IRIT(227, 259),
-        UNFINISHED_AVANTOE(227, 211),
+        UNFINISHED_AVANTOE(227, 261),
         UNFINISHED_KWUARM(227, 263),
         UNFINISHED_SNAPDRAGON(227, 3000),
         UNFINISHED_CADANTINE(227, 265),
-        UNFINISHED_LANTADYME(227, 2535),
+        UNFINISHED_LANTADYME(227, 2481),
         UNFINISHED_DWARF_WEED(227, 267),
         UNFINISHED_TORSTOL(227, 271),
         UNFINISHED_FELLSTALK(227, 21676),
@@ -98,8 +98,9 @@ public class Utilities {
     }
 
     public static int[] getIngredients(String potion) {
+        potion = potion.replaceAll((" "), "_").toUpperCase();
         for (Potions p : Potions.values()) {
-            if (p.name().equals(potion.replaceAll((" "), "_").toUpperCase())) {
+            if (p.name().equals(potion)) {
                 return new int[]{p.primary, p.secondary};
             }
         }
@@ -107,8 +108,9 @@ public class Utilities {
     }
 
     public static int getHerb(String herb) {
+        herb = herb.replaceAll((" "), "_").toUpperCase();
         for (Herbs h : Herbs.values()) {
-            if (h.name().equals(herb.replaceAll((" "), "_").toUpperCase())) {
+            if (h.name().equals(herb)) {
                 return h.id;
             }
         }

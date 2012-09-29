@@ -4,7 +4,6 @@ import org.itherblore.user.Condition;
 import org.itherblore.user.Utilities;
 import org.itherblore.user.Variables;
 import org.powerbot.core.script.job.state.Node;
-import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 
@@ -45,8 +44,7 @@ public class Banking extends Node {
                 } else {
                     if (Bank.getItemCount(Variables.primary) == 0 || Bank.getItemCount(Variables.secondary) == 0) {
                         Bank.close();
-                        Game.logout(true);
-                        log.info("All out of supplies...");
+                        log.info("All out of supplies... waiting for manual log out");
                         get().getScriptHandler().stop();
                     }
 
@@ -62,8 +60,7 @@ public class Banking extends Node {
             } else {
                 if (Bank.getItemCount(Variables.primary) == 0) {
                     Bank.close();
-                    Game.logout(true);
-                    log.info("All out of herbs...");
+                    log.info("All out of herbs... waiting for manual log out");
                     get().getScriptHandler().stop();
                 } else {
                     Bank.withdraw(Variables.primary, 0);

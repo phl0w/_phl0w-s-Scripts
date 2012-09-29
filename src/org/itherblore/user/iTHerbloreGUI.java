@@ -153,6 +153,8 @@ public class iTHerbloreGUI extends JFrame {
         } else {
             Variables.primary = Utilities.getHerb((String) jComboBox1.getSelectedItem());
         }
+        System.out.println("Primary ingredient: " + Variables.primary);
+        System.out.println("Secondary ingredient: " + Variables.secondary);
         Variables.status = "gui done";
         Variables.guiInitialized = true;
         dispose();
